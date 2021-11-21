@@ -93,8 +93,8 @@
   ],
   "overriddenProperties": [],
   "parent": {
-    "name": "Objects",
-    "path": "folders/Objects.yy",
+    "name": "GameMaker.Utils.Cheats",
+    "path": "folders/Objects/GameMaker.Utils.Cheats.yy",
   },
   "resourceVersion": "1.0",
   "name": "obj_shell",
