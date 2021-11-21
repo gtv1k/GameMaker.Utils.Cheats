@@ -1,7 +1,6 @@
-# rt-shell
-![banner graphic](images/banner.png)
-
+# GameMaker.Utils.Cheats
 An easy-to-use, customizable, and extensible cheat/debug console for GameMaker Studio 2.3+.
+Based on daikon-games' rt-shell
 
 #### Table of Contents
 * [Setup](#setup)
@@ -28,7 +27,7 @@ Now let's write our function! We want it to take an argument as input, and print
 
 ![A "Hello World" example](images/helloworld-example.png)
 
-Our function needs to start with `cheat_`, so let's call it `cheat_say_greeting`. As you can see in the example screenshot above, you do not include the `sh_` when calling the function.
+Our function needs to start with `cheat_`, so let's call it `cheat_say_greeting`. As you can see in the example screenshot above, you do not include the `cheat_` when calling the function.
 
 rt-shell functions take an array called `args` as an argument, and any arguments passed to the function at the console are present in this array in GML. `args[0]` always contains the name of the function, as in typical shell programming, and `args[1]` and onwards are the real arguments passed in.
 
@@ -50,7 +49,7 @@ rt-shell provides a way for you to add metadata to your commands. This will let 
 
 Adding metadata works much the same way as adding your custom commands in the first place. You simply create a new function that begins with `meta_` followed by the name of your function. For instance, if you had a function `cheat_create_balloon` then you could add metadata by creating another function `meta_create_balloon`. The part of the name after `cheat_` and after `meta_` must match exactly for them to be linked.
 
-Let's say that `sh_create_balloon` looked like this:
+Let's say that `cheat_create_balloon` looked like this:
 ```gml
 function cheat_create_balloon (args) {
 	var balloon = instance_create_layer(args[1], args[2], "balloon_layer", obj_balloon);
