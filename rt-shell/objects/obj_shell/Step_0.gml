@@ -40,7 +40,8 @@ else
 		cursorPos = 1;
 		targetScrollPosition = maxScrollPosition;
 	}
-	else if (self.keyComboPressed([metaKey], ord("E"))) 
+	else if (keyboard_check_pressed(vk_end))
+	//else if (self.keyComboPressed([metaKey], ord("E"))) 
 	{
 		// bash-style jump to end of line
 		cursorPos = string_length(consoleString) + 1;
