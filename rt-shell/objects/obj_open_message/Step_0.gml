@@ -1,7 +1,10 @@
 waveFrame = (waveFrame + 1) % waveFrames;
 
-if (obj_shell.isOpen) {
+if (obj_shell.isOpen) 
+{
 	msg = closeMsg;
-} else {
+}
+else 
+{
 	msg = openMsg;
 }
