@@ -33,7 +33,8 @@ else
 			self.close()
 		}
 	} 
-	else if (self.keyComboPressed([metaKey], ord("A"))) 
+	else if (keyboard_check_pressed(vk_home))
+	//else if (self.keyComboPressed([metaKey], ord("A"))) 
 	{
 		// bash-style jump to beginning of line
 		cursorPos = 1;

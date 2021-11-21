@@ -5,7 +5,8 @@
  */
 variable_global_set("cheat_help", function(args) 
 {
-	if (array_length(args) > 1) {
+	if (array_length(args) > 1) 
+	{
 		// Display specific help for an individual function
 		var helpFunction = args[1];
 		if (array_contains(availableFunctions, helpFunction)) 
