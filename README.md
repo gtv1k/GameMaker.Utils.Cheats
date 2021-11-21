@@ -1,7 +1,7 @@
 # rt-shell
 ![banner graphic](images/banner.png)
 
-rt-shell, or **r**un-**t**ime **shell** an easy-to-use, customizable, and extensible cheat/debug console for GameMaker Studio 2.3+.
+An easy-to-use, customizable, and extensible cheat/debug console for GameMaker Studio 2.3+.
 
 #### Table of Contents
 * [Setup](#setup)
@@ -14,15 +14,13 @@ rt-shell, or **r**un-**t**ime **shell** an easy-to-use, customizable, and extens
 
 ## Setup
 
-Integrating rt-shell into your project is simple: just [download the latest release](https://github.com/daikon-games/rt-shell/releases), and then in GameMaker Studio click on the **Tools** menu and select **Import Local Package**. Choose the `.yymps` file you downloaded, and import all assets.
+Integrating it into your project is simple: just [download the latest release](https://github.com/gtv1k/GameMaker.Utils.Cheats/releases), and then in GameMaker Studio click on the **Tools** menu and select **Import Local Package**. Choose the `.yymps` file you downloaded, and import all assets.
 
-Alternatively you can install rt-shell from the [Game Maker Marketplace](https://marketplace.yoyogames.com/assets/9485/rt-shell).
-
-The `obj_shell` object is a persistent object, so you only need to include or create it once, though it is smart enough to automatically handle excess instances. The default way to open the shell is `Ctrl + Shift + C`, and it can be closed by pressing `Esc`.
+The `obj_shell` object is a persistent object, so you only need to include or create it once, though it is smart enough to automatically handle excess instances. You can open and close the console by pressing `F1`.
 
 ## Writing Your Own Shell Commands
 
-rt-shell will execute any global scripts whose names start with `sh_`. You can see the example scripts included with the test project in [`scr_shell_scripts.gml`](rt-shell/scripts/scr_shell_scripts/scr_shell_scripts.gml).
+rt-shell will execute any global scripts whose names start with `cheat_`. You can see the example scripts included with the test project in [`scr_shell_scripts.gml`].
 
 Let's write a simple "Hello World" commands together. We first need a place to create the function, so create a Script asset in your project. The name of this asset isn't important, but we can call it `scr_shell_scripts` as I have done in the test project.
 
@@ -30,7 +28,7 @@ Now let's write our function! We want it to take an argument as input, and print
 
 ![A "Hello World" example](images/helloworld-example.png)
 
-Our function needs to start with `sh_`, so let's call it `sh_say_greeting`. As you can see in the example screenshot above, you do not include the `sh_` when calling the function.
+Our function needs to start with `cheat_`, so let's call it `cheat_say_greeting`. As you can see in the example screenshot above, you do not include the `sh_` when calling the function.
 
 rt-shell functions take an array called `args` as an argument, and any arguments passed to the function at the console are present in this array in GML. `args[0]` always contains the name of the function, as in typical shell programming, and `args[1]` and onwards are the real arguments passed in.
 
@@ -39,7 +37,7 @@ rt-shell functions can optionally return a string, and if they do that string wi
 With all that said, here's our final hello world function:
 
 ```gml
-function sh_say_greeting (args) {
+function cheat_say_greeting (args) {
 	return "Hello " + args[1] + "!";
 }
 ```
@@ -50,11 +48,11 @@ Simple, right? With that function in place, you can call `say_greeting` from the
 
 rt-shell provides a way for you to add metadata to your commands. This will let you see possible arguments and autocomplete suggestions within the shell, as well as let you plug into the shell's built-in `help` commands to document your own functions!
 
-Adding metadata works much the same way as adding your custom commands in the first place. You simply create a new function that begins with `meta_` followed by the name of your function. For instance, if you had a function `sh_create_balloon` then you could add metadata by creating another function `meta_create_balloon`. The part of the name after `sh_` and after `meta_` must match exactly for them to be linked.
+Adding metadata works much the same way as adding your custom commands in the first place. You simply create a new function that begins with `meta_` followed by the name of your function. For instance, if you had a function `cheat_create_balloon` then you could add metadata by creating another function `meta_create_balloon`. The part of the name after `cheat_` and after `meta_` must match exactly for them to be linked.
 
 Let's say that `sh_create_balloon` looked like this:
 ```gml
-function sh_create_balloon (args) {
+function cheat_create_balloon (args) {
 	var balloon = instance_create_layer(args[1], args[2], "balloon_layer", obj_balloon);
 	balloon.type = args[3];
 	balloon.color = args[4];
@@ -71,7 +69,7 @@ function meta_create_balloon() {
 			[],
 			[],
 			["normal", "animal_dog", "animal_snake"],
-			["pink", "blue", "brown", "green"]
+			["red", "green", "blue"]
 		],
 		argumentDescriptions: [
 			"the X coordinate to create the balloon at",
@@ -94,7 +92,7 @@ The command will also display the arguments and description fields when running 
 
 Some things to keep in mind:
 
-1. The function names must match after the `sh_` and `meta_` prefixes.
+1. The function names must match after the `cheat_` and `meta_` prefixes.
 2. The order of the array items in `arguments`, `suggestions`, and `argumentDescriptions` must line up
 3. If suggestions aren't needed for an argument (like for `x` or `y` above), just input a blank array `[]`
 4. `description` and `argumentDescriptions` are optional, they're only used for the `help` output
@@ -144,8 +142,6 @@ You can see examples of various ways to customize the shell's appearance on the 
 
 | variable | definition | default |
 |----------|------------|---------|
-| `openKey` | The key that opens the console, in combination with the `modifierKeys` if any. In the form of an expression. | `ord("C")` |
-| `openModifiers` | A multi-select of special keys for use with `openKey`. All the selected keys must be pressed in combination with `openKey` to open the console | `vk_control`, `vk_shift` |
 | `openFunction` | A reference to a function that will be executed every time the shell is opened. Could be used to pause the game when the shell opens, for example | `undefined` |
 | `closeFunction` | A reference to a function that will be executed every time the shell is closed. Could be used to unpause the game when the shell closes, for example | `undefined` |
 | `enableAutoComplete` | Whether or not to use the new autocompletion box. Marking this false will only provide in-line completion suggestions. | `true` |
