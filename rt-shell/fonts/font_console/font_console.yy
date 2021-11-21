@@ -127,8 +127,8 @@
   "canGenerateBitmap": true,
   "maintainGms1Font": false,
   "parent": {
-    "name": "Fonts",
-    "path": "folders/Fonts.yy",
+    "name": "GameMaker.Utils.Cheats",
+    "path": "folders/Fonts/GameMaker.Utils.Cheats.yy",
   },
   "resourceVersion": "1.0",
   "name": "font_console",
