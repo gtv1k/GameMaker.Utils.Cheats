@@ -1,11 +1,11 @@
 // Shell scripts can be defined here
-// Method names must start with sh_, but will not include that when being invoked
-// For example, to invoke sh_test_method from an rt-shell, you would simply type test_method
+// Method names must start with cheat_, but will not include that when being invoked
+// For example, to invoke cheat_test_method from an rt-shell, you would simply type test_method
 // 
 // If a method returns a string value, it will be print to the shell output
 
 // Just for example
-function sh_create_balloon (args) {
+function cheat_create_balloon (args) {
 	//var balloon = instance_create_layer(args[1], args[2], "balloon_layer", obj_balloon);
 	//balloon.type = args[3];
 	//balloon.color = args[4];
@@ -27,7 +27,7 @@ function meta_create_balloon() {
 	}
 }
 
-function sh_get_bgspeed() {
+function cheat_get_bgspeed() {
 	var bgHspeed = obj_test_room.bgHspeed;
 	var bgVspeed = obj_test_room.bgVspeed;
 	return "hspeed: " + string(bgHspeed) + ", vspeed: " + string(bgVspeed);
@@ -40,7 +40,7 @@ function meta_get_bgspeed() {
 
 // If you want a method to take arguments at the command line, pass in an args object here
 // args[0] will always be the function name, args[1] and onwards will be your actual arguments
-function sh_set_bg_hspeed(args) {
+function cheat_set_bg_hspeed(args) {
 	var newHspeed = args[1];
 	try {
 		obj_test_room.bgHspeed = real(newHspeed);
@@ -58,7 +58,7 @@ function meta_set_bg_hspeed() {
 	}
 }
 
-function sh_set_bg_vspeed(args) {
+function cheat_set_bg_vspeed(args) {
 	var newVspeed = args[1];
 	try {
 		obj_test_room.bgVspeed = real(newVspeed);
@@ -78,7 +78,7 @@ function meta_set_bg_vspeed() {
 
 // Here is an example of a shell script that takes multiple command line arguments
 // See how I've assigned args[1], args[2], and args[3] into local variables for easier use
-function sh_set_bg_color(args) {
+function cheat_set_bg_color(args) {
 	var red = args[1];
 	var green = args[2];
 	var blue = args[3];
@@ -99,7 +99,7 @@ function meta_set_bg_color() {
 	}
 }
 
-function sh_say_greeting(args) {
+function cheat_say_greeting(args) {
 	var whomToGreet = args[1];
 	return "Hello " + whomToGreet + "!";
 }
@@ -113,15 +113,15 @@ function meta_say_greeting() {
 	}
 }
 
-function sh_test_duplicate_spawn() {
+function cheat_test_duplicate_spawn() {
 	instance_create_layer(0, 0, "Instances", obj_shell);
 }
 
-function sh_test_error_handling() {
+function cheat_test_error_handling() {
 	return undefined.property;
 }
 
-function sh_shell_apply_theme(args) {
+function cheat_shell_apply_theme(args) {
 	var themeName = args[1];
 	for (var i = 0; i < array_length(global.rtShellThemes); i++) {
 		var theme = global.rtShellThemes[i];

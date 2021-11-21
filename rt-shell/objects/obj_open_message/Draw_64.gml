@@ -6,7 +6,9 @@ draw_set_font(font_demo);
 draw_set_halign(fa_center);
 
 var stringCharCount = string_length(msg);
-for (var i = 1; i <= stringCharCount; i++) {
+
+for (var i = 1; i <= stringCharCount; i++) 
+{
 	var char = string_char_at(msg, i);
 	var xOffset = -18 * ((stringCharCount/2) - i);
 	var waveDeg = (((waveFrame + (3 * i)) % waveFrames)/waveFrames) * 360;

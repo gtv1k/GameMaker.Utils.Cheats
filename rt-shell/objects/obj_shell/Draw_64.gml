@@ -1,32 +1,41 @@
-if (isOpen) {
+if (isOpen) 
+{
 	draw_set_font(consoleFont);
 	// pre-calculate one "em" of width & height
 	var emWidth = string_width("M");
 	var emHeight = string_height("M");
 	
-	if (!surface_exists(shellSurface)) {
+	if (!surface_exists(shellSurface)) 
+	{
 		shellSurface = surface_create(display_get_gui_width(), display_get_gui_height());
 		recalculate_shell_properties();
-	} else if (surface_get_width(shellSurface) != display_get_gui_width() || surface_get_height(shellSurface) != display_get_gui_height()) {
+	}
+	else if (surface_get_width(shellSurface) != display_get_gui_width() || surface_get_height(shellSurface) != display_get_gui_height()) 
+	{
 		surface_resize(shellSurface, display_get_gui_width(), display_get_gui_height());
 	}
 	
 	var promptXOffset = consolePaddingH + string_width(prompt) + anchorMargin;
 	
 	outputHeight = 0;
-	for (var i = 0; i < array_length(output); i++) {
+	for (var i = 0; i < array_length(output); i++) 
+	{
 		outputHeight += string_height_ext(output[i], -1, visibleWidth - promptXOffset);
 	}
-	if (!surface_exists(scrollSurface)) {
+	if (!surface_exists(scrollSurface)) 
+	{
 		scrollSurface = surface_create(display_get_gui_width(), visibleHeight);
-	} else if (surface_get_width(scrollSurface) != display_get_gui_width() || 
-			   surface_get_height(scrollSurface) != visibleHeight) {
+	} 
+	else if (surface_get_width(scrollSurface) != display_get_gui_width() || 
+			   surface_get_height(scrollSurface) != visibleHeight) 
+	{
 		surface_resize(scrollSurface, display_get_gui_width(), visibleHeight);
 	}
 	
 	// Updating this here removes jitter as the scroll bar draws one frame in the old position
 	// and then jumps to the bottom. This fixes that
-	if (commandSubmitted) {
+	if (commandSubmitted) 
+	{
 		maxScrollPosition = max(0, outputHeight - visibleHeight + emHeight);
 		if (scrollSmoothness == 0) { scrollPosition = maxScrollPosition; }
 		targetScrollPosition = maxScrollPosition;
@@ -39,15 +48,18 @@ if (isOpen) {
 		
 		// Add some blank space if our output is too short so things appear to come from 
 		// the bottom of the panel
-		if (outputHeight < visibleHeight - emHeight) {
+		if (outputHeight < visibleHeight - emHeight) 
+		{
 			yOffset += visibleHeight - outputHeight - emHeight;
 		}
 		
 		
 		// Draw output history
-		for (var i = 0; i < array_length(output); i++) {
+		for (var i = 0; i < array_length(output); i++) 
+		{
 			var outputStr = output[i];
-			if (string_char_at(outputStr, 1) == ">") {
+			if (string_char_at(outputStr, 1) == ">") 
+			{
 				draw_set_color(fontColorSecondary);
 				draw_text(shellOriginX + consolePaddingH, yOffset, prompt);
 				draw_text_ext(shellOriginX + promptXOffset, yOffset, string_delete(outputStr, 1, 1), -1, visibleWidth - promptXOffset);
@@ -68,44 +80,59 @@ if (isOpen) {
 		
 		// Draw text cursor
 		var cursorPosX = shellOriginX + promptXOffset + string_width(string_copy(consoleString + " ", 1, cursorPos - 1));
-		if (insertMode) {
-			if (delayFrames > 1 || current_time % 1000 < 600) {
+		if (insertMode) 
+		{
+			if (delayFrames > 1 || current_time % 1000 < 600) 
+			{
 				draw_line_width(cursorPosX, yOffset, cursorPosX, yOffset + emHeight, 1);
-			} else if (keyboard_check(vk_anykey)) {
+			} 
+			else if (keyboard_check(vk_anykey)) {
 				draw_line_width(cursorPosX, yOffset, cursorPosX, yOffset + emHeight, 1);
 			}
-		} else {
+		}
+		else
+		{
 			draw_line_width(cursorPosX + (emWidth / 2) - 1, yOffset, cursorPosX + (emWidth / 2) - 1, yOffset + emHeight, emWidth);
 			draw_set_color(promptColor);
 			draw_text(cursorPosX, yOffset, string_copy(consoleString, cursorPos, 1));
 		}
 		
 		// Draw current suggestion & argument hints
-		if (array_length(inputArray) > 0) {
+		if (array_length(inputArray) > 0) 
+		{
 			var ff = (array_length(filteredSuggestions) > 0 && string_count(" ", consoleString) == 0) ? filteredSuggestions[suggestionIndex] : inputArray[0];
 			var data = functionData[$ ff];
 			var spaceCount = string_count(" ", consoleString);
 			
 			var suggestion = spaceCount == 0 ? ff : "";
-			if (data != undefined) {
+			if (data != undefined) 
+			{
 				var args = "";
-				if (array_length(filteredSuggestions) > 0 && spaceCount > 0) {
-					if (array_length(inputArray) > spaceCount) {
+				if (array_length(filteredSuggestions) > 0 && spaceCount > 0) 
+				{
+					if (array_length(inputArray) > spaceCount) 
+					{
 						args += string_copy(filteredSuggestions[suggestionIndex], string_length(inputArray[array_length(inputArray) - 1]) + 1, string_length(filteredSuggestions[suggestionIndex]));
-					} else {
+					} 
+					else 
+					{
 						args += filteredSuggestions[suggestionIndex];
 					}
 				}
-				for (var i = spaceCount; i < array_length(data[$ "arguments"]); i++) {
+				for (var i = spaceCount; i < array_length(data[$ "arguments"]); i++) 
+				{
 					args += " ";
 					args += data.arguments[i];
 					
 				}
 				suggestion += args;
-				if (spaceCount == 0) {
+				if (spaceCount == 0) 
+				{
 					suggestion = string_copy(suggestion, string_length(consoleString) + 1, string_length(suggestion) - string_length(consoleString));
 				}
-			} else {
+			}
+			else 
+			{
 				suggestion = string_copy(ff, string_length(consoleString) + 1, string_length(ff) - string_length(consoleString));
 			}
 
@@ -125,7 +152,8 @@ if (isOpen) {
 		draw_surface(scrollSurface, 0, shellOriginY + 1 + consolePaddingV);
 		
 		// Draw scrollbar
-		if (outputHeight > visibleHeight - emHeight) {
+		if (outputHeight > visibleHeight - emHeight) 
+		{
 			var x1 = shellOriginX + width - consolePaddingH - scrollbarWidth;
 			var y1 = shellOriginY + consolePaddingV + 1;
 			var x2 = x1 + scrollbarWidth;
@@ -148,8 +176,10 @@ if (isOpen) {
 		}
 		
 		// Draw autocomplete box
-		if (array_length(filteredSuggestions) > 0) {
-			if (enableAutocomplete && autocompleteMaxLines > 0) {
+		if (array_length(filteredSuggestions) > 0) 
+		{
+			if (enableAutocomplete && autocompleteMaxLines > 0) 
+			{
 				isAutocompleteOpen = true;
 				var suggestionsAmount = min(autocompleteMaxLines, array_length(filteredSuggestions));
 				
@@ -174,7 +204,8 @@ if (isOpen) {
 				draw_rectangle(x1, y1, x2, y2, true);
 				
 				// Draw autocomplete scrollbar
-				if (suggestionsAmount < array_length(filteredSuggestions)) {
+				if (suggestionsAmount < array_length(filteredSuggestions)) 
+				{
 					draw_rectangle(x2 - (scrollbarWidth / 2), y1, x2, y2, false);
 					var scrollbarTotalHeight = y2 - y1;
 					var scrollbarHeight = (suggestionsAmount / array_length(filteredSuggestions)) * scrollbarTotalHeight;
@@ -188,31 +219,42 @@ if (isOpen) {
 				
 				// Draw autocomplete suggestions
 				draw_set_color(fontColor);
-				for (var i = 0; i < array_length(filteredSuggestions); i++) {
-					if (i < suggestionsAmount) {
+				for (var i = 0; i < array_length(filteredSuggestions); i++) 
+				{
+					if (i < suggestionsAmount) 
+					{
 						// Enable mouse detection
 						var y1Col = y1 + (i * emHeight);
 						var y2Col = y1 + (i * emHeight) + emHeight - 1 + autocompletePadding;
-						if (point_in_rectangle(device_mouse_x_to_gui(0) - 1, device_mouse_y_to_gui(0) - 1, x1, y1Col, x2, y2Col)) {
-							if (device_mouse_x_to_gui(0) != mousePreviousX || device_mouse_y_to_gui(0) != mousePreviousY) {
+						if (point_in_rectangle(device_mouse_x_to_gui(0) - 1, device_mouse_y_to_gui(0) - 1, x1, y1Col, x2, y2Col)) 
+						{
+							if (device_mouse_x_to_gui(0) != mousePreviousX || device_mouse_y_to_gui(0) != mousePreviousY)
+							{
 								suggestionIndex = i + autocompleteScrollPosition;
 								mousePreviousX = device_mouse_x_to_gui(0);
 								mousePreviousY = device_mouse_y_to_gui(0);
 							}
-							if (mouse_check_button_pressed(mb_left)) {
-								if (suggestionIndex == i + autocompleteScrollPosition) {
+							if (mouse_check_button_pressed(mb_left))
+							{
+								if (suggestionIndex == i + autocompleteScrollPosition)
+								{
 									self.confirmCurrentSuggestion();
 									self.updateFilteredSuggestions();
 									break;
-								} else {
+								} 
+								else
+								{
 									suggestionIndex = i + autocompleteScrollPosition;
 								}
 							}
 						}
 						
-						if ((i + autocompleteScrollPosition) == suggestionIndex) {
+						if ((i + autocompleteScrollPosition) == suggestionIndex) 
+						{
 							draw_set_color(promptColor);
-						} else {
+						}
+						else 
+						{
 							draw_set_color(fontColorSecondary);
 						}
 						
@@ -220,7 +262,9 @@ if (isOpen) {
 					}
 				}
 			}
-		} else {
+		}
+		else
+		{
 			isAutocompleteOpen = false;
 			autocompleteScrollPosition = 0;
 		}
