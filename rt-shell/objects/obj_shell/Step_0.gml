@@ -1,12 +1,18 @@
 if (!isOpen) 
 {
-	if (self.keyComboPressed(openModifiers, openKey)) 
+	if (keyboard_check_pressed(vk_f1))
 	{
 		self.open();
 	}
 } 
 else 
 {
+	if (keyboard_check_pressed(vk_f1))
+	{
+		self.close();
+		return;
+	}
+	
 	var prevConsoleString = consoleString;
 	
 	if (metaDeleted && keyboard_check_released(vk_backspace)) 
@@ -22,16 +28,9 @@ else
 		metaMovedRight = false;
 	}
 	
-	if (keyboard_check_pressed(vk_escape)) 
+	if (keyboard_check_pressed(vk_escape) && isAutocompleteOpen) 
 	{
-		if (isAutocompleteOpen) 
-		{
-			self.close_autocomplete();
-		} 
-		else 
-		{
-			self.close()
-		}
+		self.close_autocomplete();
 	} 
 	else if (keyboard_check_pressed(vk_home))
 	//else if (self.keyComboPressed([metaKey], ord("A"))) 
