@@ -5,7 +5,8 @@
 // If a method returns a string value, it will be print to the shell output
 
 // Just for example
-function cheat_create_balloon (args) {
+function cheat_create_balloon(args) 
+{
 	//var balloon = instance_create_layer(args[1], args[2], "balloon_layer", obj_balloon);
 	//balloon.type = args[3];
 	//balloon.color = args[4];
@@ -15,7 +16,8 @@ function cheat_create_balloon (args) {
 // "arguments" is for showing the arguments in your input string
 // "suggestions" is for showing you autocomplete suggestions for each argument
 // The index of "suggestions" corresponds to the argument number
-function meta_create_balloon() {
+function meta_create_balloon() 
+{
 	return {
 		arguments: ["x", "y", "type", "color"],
 		suggestions: [
@@ -27,58 +29,10 @@ function meta_create_balloon() {
 	}
 }
 
-function cheat_get_bgspeed() {
-	var bgHspeed = obj_test_room.bgHspeed;
-	var bgVspeed = obj_test_room.bgVspeed;
-	return "hspeed: " + string(bgHspeed) + ", vspeed: " + string(bgVspeed);
-}
-function meta_get_bgspeed() {
-	return {
-		description: "gets the speed of the background image"
-	}
-}
-
-// If you want a method to take arguments at the command line, pass in an args object here
-// args[0] will always be the function name, args[1] and onwards will be your actual arguments
-function cheat_set_bg_hspeed(args) {
-	var newHspeed = args[1];
-	try {
-		obj_test_room.bgHspeed = real(newHspeed);
-	} catch (e) {
-		return e.message;
-	}
-}
-function meta_set_bg_hspeed() {
-	return {
-		description: "set the horizontal speed of the background",
-		arguments: ["speed"],
-		argumentDescriptions: [
-			"The desired horizontal speed."
-		]
-	}
-}
-
-function cheat_set_bg_vspeed(args) {
-	var newVspeed = args[1];
-	try {
-		obj_test_room.bgVspeed = real(newVspeed);
-	} catch (e) {
-		return e.message;
-	}
-}
-function meta_set_bg_vspeed() {
-	return {
-		description: "set the vertical speed of the background",
-		arguments: ["speed"],
-		argumentDescriptions: [
-			"The desired vertical speed."
-		]
-	}
-}
-
 // Here is an example of a shell script that takes multiple command line arguments
 // See how I've assigned args[1], args[2], and args[3] into local variables for easier use
-function cheat_set_bg_color(args) {
+function cheat_set_bg_color(args) 
+{
 	var red = args[1];
 	var green = args[2];
 	var blue = args[3];
@@ -87,8 +41,10 @@ function cheat_set_bg_color(args) {
 	layer_background_blend(backgroundId, make_color_rgb(red, green, blue));
 }
 
-function meta_set_bg_color() {
-	return {
+function meta_set_bg_color() 
+{
+	return 
+	{
 		description: "set the color of the background",
 		arguments: ["red", "green", "blue"],
 		argumentDescriptions: [
@@ -99,12 +55,15 @@ function meta_set_bg_color() {
 	}
 }
 
-function cheat_say_greeting(args) {
+function cheat_say_greeting(args) 
+{
 	var whomToGreet = args[1];
 	return "Hello " + whomToGreet + "!";
 }
-function meta_say_greeting() {
-	return {
+function meta_say_greeting() 
+{
+	return 
+	{
 		description: "print a hello world type statement",
 		arguments: ["whomToGreet"],
 		argumentDescriptions: [
@@ -113,31 +72,39 @@ function meta_say_greeting() {
 	}
 }
 
-function cheat_test_duplicate_spawn() {
+function cheat_test_duplicate_spawn() 
+{
 	instance_create_layer(0, 0, "Instances", obj_shell);
 }
 
-function cheat_test_error_handling() {
+function cheat_test_error_handling() 
+{
 	return undefined.property;
 }
 
-function cheat_shell_apply_theme(args) {
+function cheat_shell_apply_theme(args) 
+{
 	var themeName = args[1];
-	for (var i = 0; i < array_length(global.rtShellThemes); i++) {
+	for (var i = 0; i < array_length(global.rtShellThemes); i++) 
+	{
 		var theme = global.rtShellThemes[i];
-		if (theme.name == themeName) {
+		if (theme.name == themeName) 
+		{
 			theme.apply();
 			break;
 		}
 	}
 }
-function meta_shell_apply_theme() {
+function meta_shell_apply_theme() 
+{
 	var themeNames = array_create(array_length(rtShellThemes));
-	for (var i = 0; i < array_length(rtShellThemes); i++) {
+	for (var i = 0; i < array_length(rtShellThemes); i++) 
+	{
 		var theme = rtShellThemes[i];
 		array_push(themeNames, theme.name);
 	}
-	return {
+	return 
+	{
 		description: "applies a theme to the shell",
 		arguments: ["themeName"],
 		argumentDescriptions: [
@@ -149,17 +116,20 @@ function meta_shell_apply_theme() {
 	}
 }
 
-RtShellTheme = function(_name, _applyFunction) constructor {
+RtShellTheme = function(_name, _applyFunction) constructor 
+{
 	name = _name;
 	applyFunction = _applyFunction;
 	
-	function apply() {
+	function apply() 
+	{
 		applyFunction();
 	}
 }
 
 rtShellThemes = [];
-array_push(rtShellThemes, new RtShellTheme("rtshell", function() {
+array_push(rtShellThemes, new RtShellTheme("rtshell", function() 
+{
 		obj_shell.consoleAlpha = 0.9;
 		obj_shell.consoleColor = c_black;
 		obj_shell.fontColor = make_color_rgb(255, 242, 245);
@@ -172,7 +142,8 @@ array_push(rtShellThemes, new RtShellTheme("rtshell", function() {
 		obj_shell.promptColor = make_color_rgb(237, 0, 54);
 		obj_shell.prompt = "$";
 	}));
-array_push(rtShellThemes, new RtShellTheme("rtshell_light", function() {
+array_push(rtShellThemes, new RtShellTheme("rtshell_light", function() 
+{
 		obj_shell.consoleAlpha = 0.9;
 		obj_shell.consoleColor = make_color_rgb(235, 235, 235);
 		obj_shell.fontColor = make_color_rgb(40, 40, 45);
@@ -185,7 +156,8 @@ array_push(rtShellThemes, new RtShellTheme("rtshell_light", function() {
 		obj_shell.promptColor = make_color_rgb(29, 29, 196);
 		obj_shell.prompt = "$";
 	}));
-array_push(rtShellThemes, new RtShellTheme("ocean_blue", function() {
+array_push(rtShellThemes, new RtShellTheme("ocean_blue", function() 
+{
 		obj_shell.consoleAlpha = 1;
 		obj_shell.consoleColor = make_color_rgb(29, 31, 33);
 		obj_shell.fontColor = make_color_rgb(197, 200, 198);
@@ -198,7 +170,8 @@ array_push(rtShellThemes, new RtShellTheme("ocean_blue", function() {
 		obj_shell.promptColor = make_color_rgb(57, 113, 237);
 		obj_shell.prompt = "%";
 	}));
-array_push(rtShellThemes, new RtShellTheme("dracula", function() {
+array_push(rtShellThemes, new RtShellTheme("dracula", function() 
+{
 		obj_shell.consoleAlpha = 1;
 		obj_shell.consoleColor = make_color_rgb(40, 42, 54);
 		obj_shell.fontColor = make_color_rgb(248, 248, 242);
@@ -211,7 +184,8 @@ array_push(rtShellThemes, new RtShellTheme("dracula", function() {
 		obj_shell.promptColor = make_color_rgb(80, 250, 123);
 		obj_shell.prompt = "->";
 	}));
-array_push(rtShellThemes, new RtShellTheme("solarized_light", function() {
+array_push(rtShellThemes, new RtShellTheme("solarized_light", function() 
+{
 		obj_shell.consoleAlpha = 1;
 		obj_shell.consoleColor = make_color_rgb(253, 246, 227);
 		obj_shell.fontColor = make_color_rgb(101, 123, 131);
@@ -224,7 +198,8 @@ array_push(rtShellThemes, new RtShellTheme("solarized_light", function() {
 		obj_shell.promptColor = make_color_rgb(42, 161, 152);
 		obj_shell.prompt = "~";
 	}));
-array_push(rtShellThemes, new RtShellTheme("solarized_dark", function() {
+array_push(rtShellThemes, new RtShellTheme("solarized_dark", function() 
+{
 		obj_shell.consoleAlpha = 1;
 		obj_shell.consoleColor = make_color_rgb(0, 43, 54);
 		obj_shell.fontColor = make_color_rgb(131, 148, 150);
